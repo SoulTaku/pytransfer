@@ -8,12 +8,19 @@ s.connect((input('IP > '), 420))
 files = pickle.loads(s.recv(1024))
 
 for f in files:
-	print(f)
+    print(f)
 
-name = input('file > ')
+name = ''
+
+while name == '':
+    name = input('file > ')
+
+    if name not in files:
+        print(f'{name} not in files')
+        name = ''
+
 
 s.send(name.encode())
 
 data = pickle.loads(s.recv(4096))
-open(name, 'w').write(data)
-
+open(name, 'wb').write(data)
